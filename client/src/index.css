@@ -1,0 +1,14 @@
+@import url('https://fonts.goggleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+
+html,body{
+    background-color: white;
+    color:#000000cc;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    font-family: "Inter", sans-serif;
+}
+
+::-webkit-scrollbar{
+    display: none;
+}
