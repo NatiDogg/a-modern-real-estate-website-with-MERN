@@ -52,7 +52,7 @@ const About = () => {
                               </div>
                                <div className='flex flex-col gap-1 ml-6'>
                                    <div className='flex flex-row items-center'>
-                                     {Array(5).fill("").map((s,index)=>{
+                                     {Array(5).fill("").map((_,index)=>{
                                     return <img key={index} src={star} alt="" className='w-5 h-5' />
                                    })}
                                     <p className='ml-2 text-gray-600 text-sm'>5.0</p>
