@@ -6,6 +6,7 @@ import Home from './Pages/Home.jsx';
 import Listing from './Pages/Listing.jsx';
 import Blog from './Pages/Blog.jsx';
 import Contact from './Pages/Contact.jsx';
+import SinglePropertyList from './Pages/SinglePropertyList.jsx';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                 <Routes>
                    <Route path='/' element= {<Home />} />
                    <Route path='/listing' element= {<Listing />} />
+                   <Route path='/listing/:id' element= {<SinglePropertyList />} />
                     <Route path='/blog' element= {<Blog />} />
                     <Route path='/contact' element= {<Contact />} />
                  </Routes>

@@ -21,9 +21,11 @@ const FeaturedProperties = () => {
                  </div>
                    <div className='flex justify-between md:px-6'>
                      <h5 className='text-sm text-gray-900'><span className='font-bold'>Displaying 1-9</span> from 3k listings</h5>
-                      <Link onClick={()=>{window.scrollTo(0,0)}} to={"/listing"} className='text-black'>
+                      <div className='border-2 px-1 py-0.5 border-gray-200 shadow-2xl'>
+                         <Link onClick={()=>{window.scrollTo(0,0)}} to={"/listing"} className='text-black'>
                          <img className='h-5 w-5' src={assets.sliders} alt="slider logo" />
                       </Link>
+                      </div>
                    </div>
                   { <Swiper 
                      autoplay={
