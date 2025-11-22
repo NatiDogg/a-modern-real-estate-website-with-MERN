@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useContext, useEffect,useState} from 'react'
 import { Link,useLocation } from 'react-router-dom';
 import Logo from '../assets/logo.png'
 import NavBar from '../Components/NavBar';
@@ -6,11 +6,27 @@ import loginLogo from '../assets/user.svg';
 import closeBtn from '../assets/close.svg'
 import openMenuBtn from '../assets/menu.svg'
 import searchBtn from '../assets/search.svg';
+import {UserButton, useUser, useClerk } from "@clerk/clerk-react"
+import { AppContext } from '../Context/AppContext';
+
 const Header = () => {
-       const [active, setActive] = useState(false);
+    const [active, setActive] = useState(false);
     const [menuOpened, setMenuOpened] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const location = useLocation();
+    const {user} =  useUser();
+    const {openSignIn} = useClerk();
+    const {navigate} = useContext(AppContext);
+
+
+    const BookingIcon = () => {
+           return <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.1 0-2 .9-2 
+                     2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 
+                 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zm0-13H5V6h14v1z" />
+           </svg>
+              }
+
 
     useEffect(()=>{
        const handleScroll = ()=>{
@@ -56,13 +72,28 @@ const Header = () => {
                              <img className={`${!active && "invert"} cursor-pointer  lg:hidden`} src={closeBtn} alt='close menu icon' onClick={()=>setMenuOpened(prevMenu=> !prevMenu)} /> :  <img className={`${!active && "invert"}  cursor-pointer flex lg:hidden`} onClick={()=>setMenuOpened(prevMenu=> !prevMenu)} src={openMenuBtn} alt="open menu button" />
                            }
                      </div>
-                   <div className=' bg-yellow-300 px-5 py-2 rounded-full '>
-                       <button className='flex  flex-row gap-1 items-center cursor-pointer text-[16px]'>
+                      {/*user*/}
+                    {
+                     user ? (
+                         <div className='mt-1'>
+                              <UserButton appearance={{elements:{rootBox: "scale-125",avatarBox: "w-20 h-20"}}}>
+                                 <UserButton.MenuItems>
+                                    <UserButton.Action label='My Bookings' labelIcon={<BookingIcon/>} onClick={()=> {navigate('/my-bookings'); scrollTo(0,0)}}   />
+ 
+                                 </UserButton.MenuItems>
+                               
+                          </UserButton>
+                         </div>
+                     ): (
+                        <div className=' bg-yellow-300 px-5 py-2 rounded-full '>
+                       <button onClick={openSignIn} className='flex  flex-row gap-1 items-center cursor-pointer text-[16px]'>
                            Login 
                            <img src={loginLogo} className='h-4' alt="user Login icon" />
                        </button>
                       
                    </div>
+                     )
+                    }
                    
                </div>
              
