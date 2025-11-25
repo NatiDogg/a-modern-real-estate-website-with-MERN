@@ -41,7 +41,7 @@ const Faq = () => {
        <div className='max-w-[1460px] mx-auto px-2 py-2 md:px-6 md:py-4 grid grid-cols-1 lg:grid-cols-2 gap-6'>
            <div className='px-4 py-2 relative mx-auto flex flex-col justify-center '>
                    <img src={faq} alt="" width={600} className='rounded-2xl shadow-lg'  />
-                <div className='absolute top-6 md:top-22 shadow-lg bg-white rounded-2xl text-black w-[80%] left-8  md:left-10   '>
+                <div className='absolute top-6 md:top-18 shadow-lg bg-white rounded-2xl text-black w-[80%] left-8  md:left-10   '>
                     <div className='flex flex-row items-center gap-4 px-4 py-2 '>
                         <div className=''>
                            <img src={assets.signature} className='w-12 h-12' alt="signature icon" />
