@@ -13,7 +13,7 @@ function App() {
    
 
   return (
-       <main className=' relative flex flex-col gap-4 min-h-[2000px] '>
+       <main className=' relative flex flex-col gap-4 min-h-screen '>
             <Header />
              <div className='flex flex-col gap-4 mt-15 flex-1'>
                 <Routes>

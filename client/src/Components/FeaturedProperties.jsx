@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 
 import {Autoplay} from 'swiper/modules';
+import Loading from './Loading.jsx';
 
 const FeaturedProperties = () => {
     const {properties} = useContext(AppContext);
@@ -55,7 +56,7 @@ const FeaturedProperties = () => {
                      }}
                      modules={[Autoplay]}
                      className='w-full '>
-                        { properties.length > 0 && properties.map((property,index)=>{
+                        { properties.length === 0 ? <div className='flex flex-col items-center'><Loading/> </div>: properties.map((property,index)=>{
                            return  <SwiperSlide key={index}>
                                  <PropertyList property={property} />
                           </SwiperSlide>
