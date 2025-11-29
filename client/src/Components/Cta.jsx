@@ -18,7 +18,7 @@ const Cta = () => {
                        <p className='text-gray-400 text-center w-full sm:w-[90%] md:w-[61%]'>Achieve your goals faster with personalized strategies, hands-on support, and results that speak for themselves.</p>
                      </div>
                      <div>
-                       <button className='bg-yellow-300 px-8 py-3 rounded-full cursor-pointer text-sm font-semibold text-neutral-800'>Get Started</button>
+                       <button className='bg-yellow-300 px-8 py-3 rounded-full cursor-pointer text-sm font-semibold text-neutral- hover:shadow-2xl hover:shadow-yellow-400'>Get Started</button>
                      </div>
               </div>
         </div>   
