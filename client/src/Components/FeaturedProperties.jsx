@@ -12,7 +12,7 @@ import {Autoplay} from 'swiper/modules';
 import Loading from './Loading.jsx';
 
 const FeaturedProperties = () => {
-    const {properties} = useContext(AppContext);
+    const {properties, loadingState} = useContext(AppContext);
   return (
       <section className='w-full px-4 py-6'>
            <div className='max-w-[1460px] mx-auto  px-2 py-2 md:px-6 md:py-3 flex flex-col gap-8'>
@@ -56,11 +56,11 @@ const FeaturedProperties = () => {
                      }}
                      modules={[Autoplay]}
                      className='w-full '>
-                        { properties.length === 0 ? <div className='flex flex-col items-center'><Loading/> </div>: properties.map((property,index)=>{
+                        { properties.length === 0 && loadingState ? <div className='flex flex-col items-center'><Loading/> </div>: properties.length > 0 ? properties.map((property,index)=>{
                            return  <SwiperSlide key={index}>
                                  <PropertyList property={property} />
                           </SwiperSlide>
-                        })}
+                        }): <div className='text-center text-red-500 mt-20 text-2xl'>No matches found.</div>}
                           
                      </Swiper>}
            </div>

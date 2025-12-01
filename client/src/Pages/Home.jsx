@@ -8,7 +8,10 @@ import Cta from '../Components/Cta.jsx';
 import Testimonials from '../Components/Testimonials.jsx';
 
 
+
 const Home = () => {
+  
+
   return (
     <div className=' bg-linear-to-r from-[#fffbee] to-white flex flex-col gap-6  '>
                <Hero />
