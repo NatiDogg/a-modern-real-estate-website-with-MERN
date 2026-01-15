@@ -128,8 +128,8 @@ export const dummyAgentData = {
   export const dummyAgencyData = {
     "_id": "67f7642a197ac559e4089b99",
     "name": "Prime Solutions",
-    "contact": "0123456789",
-    "email": "contact@agencyname.com", 
+    "contact": "+251953902958",
+    "email": "contact@natnaelwondimu.com", 
     "address": "Suite 405, Midtown Business Tower, Park Avenue",
     "owner": dummyAgentData,
     "city": "Los Angeles",

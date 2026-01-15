@@ -1,7 +1,6 @@
 import React,{useContext,useState} from 'react'
 import { AppContext } from '../Context/AppContext';
 import PropertyList from '../Components/PropertyList.jsx';
-import Loading from '../Components/Loading.jsx';
 
 
 const Listing = () => {
@@ -49,7 +48,7 @@ const Listing = () => {
                   
             </div>
              <div className='grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-               {properties.length === 0 && loadingState ? <div className='col-span-3 flex flex-col justify-center items-center'><Loading /> </div>: properties.length > 0 ? properties.map((property,index)=>(
+               {  properties.length > 0 ? properties.map((property,index)=>(
                  <PropertyList key={index} property={property} />
                )): <div className='text-center text-red-500 mt-20 text-2xl'>No matches found.</div>}
              </div>

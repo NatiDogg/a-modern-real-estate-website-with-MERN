@@ -56,7 +56,7 @@ const FeaturedProperties = () => {
                      }}
                      modules={[Autoplay]}
                      className='w-full '>
-                        { properties.length === 0 && loadingState ? <div className='flex flex-col items-center'><Loading/> </div>: properties.length > 0 ? properties.map((property,index)=>{
+                        {  properties.length > 0 ? properties.map((property,index)=>{
                            return  <SwiperSlide key={index}>
                                  <PropertyList property={property} />
                           </SwiperSlide>
