@@ -5,6 +5,7 @@ import AppContextProvider from './Context/AppContext.jsx'
 import './index.css'
 import App from './App.jsx'
 import {ClerkProvider} from '@clerk/clerk-react'
+import QueryProvider from './Query/QueryProvider.jsx'
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -17,7 +18,9 @@ createRoot(document.getElementById('root')).render(
      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
          <BrowserRouter>
              <AppContextProvider>
-                 <App />
+                <QueryProvider>
+                    <App />
+                </QueryProvider>
               </AppContextProvider>
         </BrowserRouter>
      </ClerkProvider>
