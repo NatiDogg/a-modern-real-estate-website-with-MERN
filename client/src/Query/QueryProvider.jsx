@@ -3,7 +3,7 @@ import {QueryClient,QueryClientProvider} from '@tanstack/react-query'
 const queryClient = new QueryClient();
 const QueryProvider = ({children}) => {
   return (
-     <QueryClientProvider client={queryCleint}>
+     <QueryClientProvider client={queryClient}>
           {children}
      </QueryClientProvider>
   )
