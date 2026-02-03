@@ -6,7 +6,7 @@ import loginLogo from '../assets/user.svg';
 import closeBtn from '../assets/close.svg'
 import openMenuBtn from '../assets/menu.svg'
 import searchBtn from '../assets/search.svg';
-import {UserButton, useUser, useClerk } from "@clerk/clerk-react"
+import {UserButton, useClerk } from "@clerk/clerk-react"
 import { AppContext } from '../Context/AppContext';
 
 const Header = () => {
@@ -14,9 +14,9 @@ const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
     const location = useLocation();
-    const {user} =  useUser();
+   
     const {openSignIn} = useClerk();
-    const {navigate} = useContext(AppContext);
+    const {navigate, user} = useContext(AppContext);
 
 
     const BookingIcon = () => {

@@ -7,6 +7,7 @@ import Listing from './Pages/Listing.jsx';
 import Blog from './Pages/Blog.jsx';
 import Contact from './Pages/Contact.jsx';
 import PropertyDetail from './Pages/PropertyDetail.jsx';
+import MyBooking from './Pages/MyBooking.jsx'
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                    <Route path='/listing/:id' element= {<PropertyDetail />} />
                     <Route path='/blog' element= {<Blog />} />
                     <Route path='/contact' element= {<Contact />} />
+                    <Route path='/my-bookings' element= {<MyBooking />} />
                  </Routes>
              </div>
               <Footer />
