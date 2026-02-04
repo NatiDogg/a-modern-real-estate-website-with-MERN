@@ -28,7 +28,7 @@ const MyBooking = () => {
                             <h3 className='font-bold'>{booking.property.title}</h3>
                             <div className='flex justify-between items-center w-[60%]'>
                                <p className='text-gray-700 font-semibold text-sm'>Guests: <span className='text-gray-400 text-xs'>{booking.guests}</span></p>
-                               <p className='text-gray-700 font-semibold text-sm'>Total: <span className='text-gray-400 text-xs'>{booking.totalPrice}</span></p>
+                               <p className='text-gray-700 font-semibold text-sm'>Total: <span className='text-gray-400 text-xs'>{currency}{booking.totalPrice}</span></p>
                                
                             </div>
                             <div className='flex gap-0.5 items-center'>
@@ -40,8 +40,8 @@ const MyBooking = () => {
                          
                     </div>
                      <hr className='m-1 text-gray-200' />
-                     <div className='flex justify-between items-center p-1'>
-                         <div className='flex gap-3 items-center'>
+                     <div className='flex flex-col md:flex-row md:justify-between gap-4 md:items-center p-1'>
+                         <div className='flex flex-col md:flex-row gap-3 md:items-center'>
                              <div>
                                 <p className='text-sm text-black '>Booking ID: <span className='text-gray-400'>{booking._id}</span></p>
                              </div>
@@ -57,7 +57,7 @@ const MyBooking = () => {
                                <p className='text-sm'>Payment:</p>
                               {booking.isPaid ? <div className='w-2 h-2 bg-green-500 rounded-full'></div> : <div className='w-2 h-2 bg-amber-400 rounded-full'></div>}
                               <p className='text-sm'>{booking.isPaid ? "Paid" : "Unpaid"}</p>
-                               {booking.isPaid ? "" : <button className='bg-yellow-400 text-xs px-6 py-1 cursor-pointer ml-2'>Pay Now</button>}
+                               {!booking.isPaid && <button className='bg-yellow-400 text-xs px-6 py-1 cursor-pointer ml-2'>Pay Now</button>}
                             </div>
                          </div>
                      </div>

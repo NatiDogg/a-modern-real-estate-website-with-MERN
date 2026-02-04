@@ -7,8 +7,10 @@ export const AppContext = createContext();
 const AppContextProvider = ({children}) => {
     const currency = import.meta.env.VITE_CURRENCY
     const navigate = useNavigate();
-    const [properties, setProperties] = useState([]);
      const {user} =  useUser();
+    const [properties, setProperties] = useState([]);
+    const [showAgencyReg, setShowAgencyReg] = useState(false);
+    
 
 
     const getProperties = ()=>{
@@ -26,7 +28,9 @@ const AppContextProvider = ({children}) => {
         navigate,
         properties,
         currency,
-        user
+        user,
+        showAgencyReg,
+        setShowAgencyReg
       
 
     }
