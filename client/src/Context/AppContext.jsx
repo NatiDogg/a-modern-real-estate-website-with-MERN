@@ -9,7 +9,7 @@ const AppContextProvider = ({children}) => {
     const navigate = useNavigate();
      const {user} =  useUser();
     const [properties, setProperties] = useState([]);
-    const [showAgencyReg, setShowAgencyReg] = useState(false);
+    const [showAgencyReg, setShowAgencyReg] = useState(true);
     
 
 

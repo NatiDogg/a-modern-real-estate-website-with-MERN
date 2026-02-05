@@ -20,7 +20,7 @@ function App() {
        <main className=' relative flex flex-col gap-4 min-h-screen '>
             <Header />
             {
-               !showAgencyReg && <AgencyReg/>
+               showAgencyReg && <AgencyReg/>
             }
              <div className='flex flex-col gap-4 mt-15 flex-1'>
                 <Routes>
