@@ -9,7 +9,8 @@ const AppContextProvider = ({children}) => {
     const navigate = useNavigate();
      const {user} =  useUser();
     const [properties, setProperties] = useState([]);
-    const [showAgencyReg, setShowAgencyReg] = useState(true);
+    const [showAgencyReg, setShowAgencyReg] = useState(false);
+    const [isOwner, setIsOwner] = useState(true);
     
 
 
@@ -30,7 +31,9 @@ const AppContextProvider = ({children}) => {
         currency,
         user,
         showAgencyReg,
-        setShowAgencyReg
+        setShowAgencyReg,
+        isOwner,
+        setIsOwner
       
 
     }

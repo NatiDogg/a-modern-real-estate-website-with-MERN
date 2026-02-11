@@ -12,7 +12,7 @@ const Listing = () => {
   
 
   return (
-    <section className='mt-5 w-full  px-4 bg-linear-to-r from-[#fffbee] to-white'>
+    <section className='mt-10 w-full  px-4 bg-linear-to-r from-[#fffbee] to-white'>
         <div className='max-w-[1460px] mx-auto px-2 py-2 md:px-4 md:py-3 flex flex-col md:flex-row gap-8'>
             <div className=' min-w-[10%] md:min-w-[30%] min-h-[600px] bg-linear-to-t from-yellow-50 via-yellow-100 to-yellow-100 px-8 py-2 flex flex-col gap-10'>
                   <div className='mt-5'>

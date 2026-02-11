@@ -27,7 +27,7 @@ const AgencyReg = () => {
     }
     const handleFormSubmit = (e)=>{
         e.preventDefault();
-        console.log('formData: ',formData)
+        
         setFormData({
          name: "",
           email: "",
@@ -46,7 +46,7 @@ const AgencyReg = () => {
               <div className='absolute top-0 right-0 p-2'>
                  <button onClick={()=>setShowAgencyReg(false)} className='bg-yellow-300 rounded-full p-0.5 cursor-pointer hover:bg-black hover:text-yellow-300'><img src={assets.close} className='w-5 h-5 p-0.5 hover:invert' alt="" /></button>
               </div>
-              <form onSubmit={handleFormSubmit} className='mt-12 p-2 w-full flex flex-col gap-4' action="">
+              <form onClick={(e)=> e.stopPropagation()} onSubmit={handleFormSubmit} className='mt-12 p-2 w-full flex flex-col gap-4' action="">
                    <h2 className='text-2xl font-bold text-black'>Register Agency</h2>
                    <div className='flex flex-col gap-4'>
                       <div className='flex flex-col md:flex-row lg:items-center gap-4'>
