@@ -26,7 +26,7 @@ function App() {
 
 
   return (
-       <main className=' relative flex flex-col gap-4 min-h-screen '>
+       <main className=' relative  bg-linear-to-r from-[#fcfbf9] to-white flex flex-col gap-4 min-h-screen '>
             {!isOwnerPath && <Header />}
             {
                showAgencyReg && <AgencyReg/>
