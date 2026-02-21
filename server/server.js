@@ -30,3 +30,5 @@ const startServer = async()=>{
 }
 startServer()
 
+console.log("get ready")
+
