@@ -48,6 +48,7 @@ import pImg2 from "../assets/pImg2.png"
 import pImg3 from "../assets/pImg3.png"
 import pImg4 from "../assets/pImg4.png"
 import createPrp from "../assets/createPrp.png"
+import uploadIcon from '../assets/upload_icon.png'
 
 // Blogs
 import blog1 from "../assets/blogs/blog1.jpg";
@@ -101,7 +102,8 @@ export const assets = {
     user2,
     user3,
     user4,
-    createPrp
+    createPrp,
+    uploadIcon
 }
 
 export const cities = [
