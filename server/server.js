@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import { config } from 'dotenv'
+import connectToDb from './config/connectDb.js'
+import { clerkMiddleware } from '@clerk/express'
 config()
 const app = express()
 const port = process.env.PORT || 5000
@@ -13,6 +15,7 @@ const corsOptions = {
 //middleware
 app.use(express.json());
 app.use(cors())
+app.use(clerkMiddleware())
 
 //routes
 
@@ -20,6 +23,7 @@ app.use(cors())
 
 const startServer = async()=>{
      try {
+         await connectToDb()
         app.listen(port,()=>{
             console.log("server is running on port ",port);
         })
@@ -30,5 +34,4 @@ const startServer = async()=>{
 }
 startServer()
 
-console.log("get ready")
 
