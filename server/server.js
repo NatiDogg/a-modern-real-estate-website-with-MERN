@@ -25,9 +25,13 @@ app.use('/api/clerk',clerkWebhooks);
 
 
 
+
 const startServer = async()=>{
      try {
          await connectToDb()
+         app.get("/",(req,res)=>{
+  res.send("api succesfully connected")
+})
         app.listen(port,()=>{
             console.log("server is running on port ",port);
         })
