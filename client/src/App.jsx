@@ -14,6 +14,7 @@ import SideBar from './Components/owner/SideBar.jsx';
 import Dashboard from './Pages/owner/Dashboard.jsx';
 import AddProperty from './Pages/owner/AddProperty.jsx';
 import ListProperty from './Pages/owner/listProperty.jsx';
+import {Toaster} from 'react-hot-toast'
 
 
 
@@ -31,7 +32,9 @@ function App() {
             {
                showAgencyReg && <AgencyReg/>
             }
+                <Toaster position='bottom-right' />
              <div className='flex flex-col gap-4 mt-12  flex-1'>
+            
                 <Routes>
                    <Route path='/' element= {<Home />} />
                    <Route path='/listing' element= {<Listing />} />

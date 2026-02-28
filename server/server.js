@@ -4,6 +4,10 @@ import { config } from 'dotenv'
 import connectToDb from './config/connectDb.js'
 import { clerkMiddleware } from '@clerk/express'
 import clerkWebhooks from './controllers/clerkWebhooks.js'
+import userRouter from './routes/userRoutes.js'
+import agencyRouter from './routes/agencyRoute.js'
+import propertyRouter from './routes/propertyRoute.js'
+import bookingRouter from './routes/bookingRoute.js'
 config()
 const app = express()
 const port = process.env.PORT || 5000
@@ -22,6 +26,10 @@ app.use(clerkMiddleware())
 app.use('/api/clerk',clerkWebhooks);
 
 //routes
+app.use("/api/user",userRouter);
+app.use("/api/agencies",agencyRouter);
+app.use("/api/properties",propertyRouter);
+app.use("/api/bookings",bookingRouter);
 
 
 
