@@ -20,7 +20,7 @@ export const agencyReg = async(req,res)=>{
         }
 
         await agencyModel.create({
-            name, email,contact,city,address
+            name, email,contact,city,address,owner
         })
 
         await userModel.findByIdAndUpdate(owner, {

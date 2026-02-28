@@ -63,7 +63,9 @@ const AppContextProvider = ({children}) => {
         showAgencyReg,
         setShowAgencyReg,
         isOwner,
-        setIsOwner
+        setIsOwner,
+        axios,
+        getToken
       
 
     }

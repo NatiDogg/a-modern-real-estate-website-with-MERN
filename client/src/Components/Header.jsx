@@ -16,7 +16,7 @@ const Header = () => {
     const location = useLocation();
    
     const {openSignIn} = useClerk();
-    const {navigate, user} = useContext(AppContext);
+    const {navigate, user,isOwner,setShowAgencyReg} = useContext(AppContext);
 
 
     const BookingIcon = () => {
@@ -60,7 +60,15 @@ const Header = () => {
                   <NavBar active = {active} setMenuOpened= {setMenuOpened} menuOpened= {menuOpened}  />
               </div>
                <div className='flex flex-row items-center gap-3 md:gap-5'>
-                   
+                    <div>
+                        {
+                           user && (
+                              <button onClick={()=>isOwner ? navigate("/owner") : setShowAgencyReg(true)} className={`border p-1 text-sm rounded-full cursor-pointer  ${active ? "border-gray-300 hover:bg-gray-100" : "text-white border-white hover:bg-white hover:text-black" }  `}>
+                                  {isOwner ? "Dashboard" : "Register Agency"}
+                              </button>
+                           )
+                        }
+                    </div>
                     <div className={`${showSearch && "bg-gray-200"} hidden md:flex flex-row justify-center items-center gap-1 px-2 py-0.5  rounded-full`}>
                        <input type="text" className={`${showSearch ? "opacity-100 w-50 px-2" : "opacity-0 w-0 px-0"} transition-all duration-200 outline-none  h-full text-black text-sm`} placeholder='type here..' />
                         <div  className={`${showSearch ? "bg-gray-200" : "bg-white"}  rounded-full cursor-pointer py-1 px-1`}>

@@ -2,7 +2,8 @@ import userModel from '../models/userModel.js'
 
 
 export const authUser = async(req,res,next)=>{
-     const {userId} = req.auth;
+   console.log("Auth Data:", req.auth());
+     const {userId} = req.auth();
 
      if(!userId){
         res.json({

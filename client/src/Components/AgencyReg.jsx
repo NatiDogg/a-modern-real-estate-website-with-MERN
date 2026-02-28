@@ -1,9 +1,11 @@
 import React,{useContext,useState} from 'react'
 import { AppContext } from '../Context/AppContext';
 import { assets, cities } from '../Data/data';
+import toast from 'react-hot-toast';
+
 
 const AgencyReg = () => {
-    const {setShowAgencyReg} = useContext(AppContext);
+    const {setShowAgencyReg,axios,getToken,setIsOwner} = useContext(AppContext);
     const [formData, setFormData] = useState({
           name: "",
           email: "",
@@ -25,8 +27,27 @@ const AgencyReg = () => {
         ));
 
     }
-    const handleFormSubmit = (e)=>{
+    const handleFormSubmit = async(e)=>{
         e.preventDefault();
+
+        try {
+         const {data} = await axios.post('/api/agencies',formData, {headers: {
+            Authorization: `Bearer ${await getToken()}`
+         }});
+
+         if(data.success){
+            toast.success(data.message)
+            setIsOwner(true);
+            setShowAgencyReg(false)
+         }
+         else{
+            toast.error(data.message)
+
+         }
+
+        } catch (error) {
+           toast.error(error.message)
+        }
         
         setFormData({
          name: "",
