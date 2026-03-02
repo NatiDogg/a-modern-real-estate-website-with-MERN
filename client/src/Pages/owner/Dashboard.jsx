@@ -67,7 +67,7 @@ const Dashboard = () => {
                
               {dashboardData.bookings.map((booking,index)=>{
 
-                   return <div className='p-3 flex flex-row flex-wrap md:grid md:grid-cols-6 gap-2 md:gap-10 items-center text-black border-b border-gray-200 '>
+                   return <div key={index} className='p-3 flex flex-row flex-wrap md:grid md:grid-cols-6 gap-2 md:gap-10 items-center text-black border-b border-gray-200 '>
                         <div className='flex gap-4 items-center md:gap-10 md:p-1 col-span-1 md:col-span-2'>
                         <p className='text-gray-600 hidden md:block'>{index}</p>
                           <div className='flex items-center gap-2 '>

@@ -1,7 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import { assets } from '../../Data/data';
+import { AppContext } from '../../Context/AppContext';
+import toast from 'react-hot-toast';
 
 const AddProperty = () => {
+   const {axios,getToken} = useContext(AppContext);
 
     const [images, setImages] = useState({
         1: null,
@@ -47,7 +50,7 @@ const AddProperty = () => {
     
 
     const handleAmenities = (e)=>{
-         const { name, value, type, checked } = e.target;
+         const { name, checked } = e.target;
          setinputs(prevInputs=>({
           ...prevInputs,
           amenities:{
@@ -59,12 +62,47 @@ const AddProperty = () => {
          }))
 
     }
-    const handleOnSubmit = (e)=>{
+    const handleOnSubmit = async(e)=>{
       e.preventDefault();
-      console.log(inputs);
-      console.log(images)
 
-      setinputs({
+      const hasEmptyFields = Object.values(inputs).some((input)=> input === "");
+      const hasEmptyImageValues = Object.values(images).every((image)=>image === null);
+     
+      
+      if (hasEmptyFields || hasEmptyImageValues) {
+        toast.error("Please fill in all fields and images before submitting.")
+            return;
+           }
+
+           setLoading(true)
+
+           try {
+            const formData = new FormData()
+             formData.append("title", inputs.title)
+             formData.append("description", inputs.description)
+             formData.append("city", inputs.city)
+             formData.append("country", inputs.country)
+             formData.append("address", inputs.address)
+             formData.append("area", Number(inputs.area))
+             formData.append("propertyType", inputs.propertyType)
+             formData.append("bedrooms", Number(inputs.bedrooms))
+             formData.append("bathrooms", Number(inputs.bathrooms))
+             formData.append("garages", Number(inputs.garages))
+             formData.append("priceRent", inputs.priceSale ? Number(inputs.priceRent) : "")
+             formData.append("priceSale", inputs.priceSale ? Number(inputs.priceSale) : "")
+
+             const amenities = Object.keys(inputs.amenities).filter((key)=>inputs.amenities[key]);
+             formData.append("amenities",JSON.stringify(amenities));
+             Object.keys(images).forEach((key)=>{
+               images[key] && formData.append("images",images[key])
+             })
+
+             const {data} = await axios.post("/api/properties",formData,{
+              headers: {Authorization: `Bearer ${await getToken()}`}
+             })
+             if(data.success){
+              toast.success(data.message)
+              setinputs({
          title: "",
        description: "",
        city: "",
@@ -90,6 +128,18 @@ const AddProperty = () => {
         3: null,
         4: null
       })
+
+             }
+             else{
+               toast.error(data.message)
+             }
+           } catch (error) {
+               toast.error(error.message)
+           }
+           finally{
+             setLoading(false)
+           }
+    
 
     }
     const handlePropertyImages = (e,key)=>{
@@ -209,7 +259,7 @@ const AddProperty = () => {
 
               </div>
              <div className='flex flex-col gap-1  items-center'>
-              <button type='button' disabled={loading} className='font-semibold bg-yellow-400 text-black px-6 py-2 cursor-pointer rounded-md transition-all duration-300 ease-in-out hover:bg-yellow-300 hover:shadow-[0_10px_20px_rgba(217,119,6,0.4)] hover:-translate-y-0.5'>
+              <button type='submit' disabled={loading} className='font-semibold bg-yellow-400 text-black px-6 py-2 cursor-pointer rounded-md transition-all duration-300 ease-in-out hover:bg-yellow-300 hover:shadow-[0_10px_20px_rgba(217,119,6,0.4)] hover:-translate-y-0.5'>
                  {loading ? "Adding" : "Add Property"}
             </button>
             </div>

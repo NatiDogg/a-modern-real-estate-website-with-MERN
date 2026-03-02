@@ -8,6 +8,7 @@ import userRouter from './routes/userRoutes.js'
 import agencyRouter from './routes/agencyRoute.js'
 import propertyRouter from './routes/propertyRoute.js'
 import bookingRouter from './routes/bookingRoute.js'
+import connectCloudinary from './config/cloudinary.js'
 config()
 const app = express()
 const port = process.env.PORT || 5000
@@ -37,6 +38,7 @@ app.use("/api/bookings",bookingRouter);
 const startServer = async()=>{
      try {
          await connectToDb()
+         await connectCloudinary()
          app.get("/",(req,res)=>{
   res.send("api succesfully connected")
 })

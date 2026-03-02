@@ -17,10 +17,13 @@ export const createNewProperty = async(req,res)=>{
             })
         }
         //upload images
-        const uploadImages = req.files.map(async(file)=>{
-             const response = await cloudinary.uploader.upload(file)
-             return response.secure_url
-        })
+        const uploadImages = req.files.map(async (file) => {
+    // Access the .path property provided by your upload middleware (Multer)
+    const response = await cloudinary.uploader.upload(file.path, {
+        resource_type: "image" 
+    });
+    return response.secure_url;
+});
 
         const images = await Promise.all(uploadImages);
 

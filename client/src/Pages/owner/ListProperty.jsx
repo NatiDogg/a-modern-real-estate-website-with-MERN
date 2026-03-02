@@ -1,17 +1,56 @@
 import React,{useState,useEffect,useContext} from 'react'
 import { AppContext } from '../../Context/AppContext';
 import { dummyProperties } from '../../Data/data';
+import toast from 'react-hot-toast';
 
 const ListProperty = () => {
 
-  const {user,currency} = useContext(AppContext);
+  const {user,currency,axios,getToken} = useContext(AppContext);
 
   const [properties, setProperties] = useState([]);
 
    //getting property of the agency owner
 
    const getProperties = async()=>{
-       setProperties(dummyProperties);
+       try {
+         const {data} =  await axios.get("/api/properties/owner",{
+              headers: {Authorization: `Bearer ${await getToken()}`}
+             })
+            if(data.success){
+               setProperties(data.properties)
+
+            }
+            else{
+               toast.error(data.message)
+            }
+
+       } catch (error) {
+         toast.error(error.message)
+         
+       }
+   }
+
+   // toggle availablity of the property
+
+   const toggleAvailability = async(propertyId)=>{
+        try {
+         const {data} =  await axios.post("/api/properties/toggle-availabilty", {propertyId},{
+              headers: {Authorization: `Bearer ${await getToken()}`}
+             })
+            if(data.success){
+               toast.success(data.message)
+               getProperties()
+
+            }
+            else{
+               toast.error(data.message)
+            }
+
+       } catch (error) {
+         toast.error(error.message)
+         
+       }
+
    }
   
 
@@ -64,7 +103,7 @@ const ListProperty = () => {
 
                         <div className='flex items-center px-4'>
                            <label className='relative inline-flex items-center cursor-pointer text-gray-900 gap-3' >
-                              <input type="checkbox" className='sr-only peer' defaultChecked={property.isAvailable} />
+                              <input onChange={()=>toggleAvailability(property._id)} type="checkbox" className='sr-only peer' defaultChecked={property.isAvailable} />
                                <div className='w-10 h-6 bg-slate-300 rounded-full peer peer-checked:bg-yellow-300 transition-colors duration-200' />
                                <span className='absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-4' />
                            </label>

@@ -5,6 +5,6 @@ import { addRecentSearchCity, getUserProfile } from '../controllers/userControll
 const userRouter = express.Router();
 
 userRouter.get("/",authUser,getUserProfile)
-userRouter.get("/store-recent-search",authUser,addRecentSearchCity);
+userRouter.post("/store-recent-search",authUser,addRecentSearchCity);
 
 export default userRouter;
