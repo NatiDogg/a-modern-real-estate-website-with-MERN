@@ -1,19 +1,25 @@
 import userModel from '../models/userModel.js'
 
 
-export const authUser = async(req,res,next)=>{
-   console.log("Auth Data:", req.auth());
-     const {userId} = req.auth();
+export const authUser = async (req, res, next) => {
+    try {
+        const { userId } = req.auth(); 
 
-     if(!userId){
-        res.json({
-            success:false,
-            message: "Not Authorized!"
-        })
-     }
-     else{
-        const user = await userModel.findById(userId)
-        req.user = user;
-        next()
-     }
+        if (!userId) {
+            return res.json({ 
+                success: false,
+                message: "Not Authorized!"
+            });
+        }
+
+        const user = await userModel.findById(userId);
+        if (!user) {
+            return res.json({ success: false, message: "User not found" });
+        }
+
+        req.user = user; 
+        next();
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
 }

@@ -31,6 +31,7 @@ const AgencyReg = () => {
         e.preventDefault();
 
         try {
+         
          const {data} = await axios.post('/api/agencies',formData, {headers: {
             Authorization: `Bearer ${await getToken()}`
          }});

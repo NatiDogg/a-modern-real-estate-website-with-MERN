@@ -2,9 +2,10 @@ import React,{useState,useContext, useEffect} from 'react'
 import { assets } from '../../Data/data'
 import { dummyDashboardData } from '../../Data/data'
 import { AppContext } from '../../Context/AppContext'
+import toast from 'react-hot-toast'
 
 const Dashboard = () => {
-     const {user, currency} = useContext(AppContext);
+     const {user, currency,axios,getToken} = useContext(AppContext);
      const [dashboardData, setDashboardData] = useState({
          bookings: [],
          totalBookings: 0,
@@ -12,12 +13,33 @@ const Dashboard = () => {
      });
 
 
-     const getDashboardData = async()=>{
-         setDashboardData(dummyDashboardData)
-     }
+     const getDashboardData = async () => {
+    try {
+        const token = await getToken();
+        if (!token) {
+            console.error("No token available - User may be logged out");
+            return;
+        }
+
+        const { data } = await axios.get("/api/bookings/agency", {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (data.success) {
+            setDashboardData(data.dashboardData);
+        } else {
+            toast.error(data.message);
+        }
+    } catch (error) {
+        console.error("Clerk Token Error:", error);
+        toast.error("Session expired. Please sign in again.");
+    }
+};
 
      useEffect(()=>{
-           getDashboardData();
+           if(user){
+            getDashboardData();
+           }
      },[user])
      
   return dashboardData && (
@@ -30,7 +52,7 @@ const Dashboard = () => {
                         <img src={assets.house} className='hidden md:flex w-8 h-8' alt="" />
                      </div>
                      <div className='md:p-0.5'>
-                        <p className='text-black font-semibold text-sm md:text-[19px]'>{dashboardData.totalBookings}</p>
+                        <p className='text-black font-semibold text-sm md:text-[19px]'>{dashboardData?.totalBookings}</p>
                         <h5 className='text-yellow-400 font-bold text-sm md:text-xl'>Total Sales</h5>
                      </div>
                 </div>
@@ -39,7 +61,7 @@ const Dashboard = () => {
                         <img src={assets.dollar} className='hidden md:flex  w-8 h-8' alt="" />
                      </div>
                      <div className='md:p-0.5'>
-                        <p className='text-black font-semibold text-sm md:text-[19px]'>{dashboardData.totalRevenue}</p>
+                        <p className='text-black font-semibold text-sm md:text-[19px]'>{dashboardData?.totalRevenue}</p>
                         <h5 className='text-yellow-400 font-bold text-sm md:text-xl'>Total Earnings</h5>
                      </div>
                 </div>
@@ -65,7 +87,7 @@ const Dashboard = () => {
               </div>
              <div className='p-3'>
                
-              {dashboardData.bookings.map((booking,index)=>{
+              {dashboardData?.bookings.map((booking,index)=>{
 
                    return <div key={index} className='p-3 flex flex-row flex-wrap md:grid md:grid-cols-6 gap-2 md:gap-10 items-center text-black border-b border-gray-200 '>
                         <div className='flex gap-4 items-center md:gap-10 md:p-1 col-span-1 md:col-span-2'>

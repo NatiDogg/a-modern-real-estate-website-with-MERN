@@ -1,6 +1,5 @@
 import React,{createContext,useEffect,useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { dummyProperties } from '../Data/data.js';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -21,8 +20,18 @@ const AppContextProvider = ({children}) => {
     
 
 
-    const getProperties = ()=>{
-       setProperties(dummyProperties);
+    const getProperties = async()=>{
+        try {
+            const {data} = await axios.get("/api/properties")
+            if(data.success){
+                setProperties(data.properties)
+            }
+            else{
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
         
     }
     const getUser = async()=>{
@@ -58,6 +67,7 @@ const AppContextProvider = ({children}) => {
     const values = {
         navigate,
         properties,
+        setProperties,
         currency,
         user,
         showAgencyReg,
