@@ -15,6 +15,7 @@ const AppContextProvider = ({children}) => {
     const [properties, setProperties] = useState([]);
     const [showAgencyReg, setShowAgencyReg] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
         const {user} =  useUser();
         const {getToken} = useAuth()
     
@@ -75,7 +76,11 @@ const AppContextProvider = ({children}) => {
         isOwner,
         setIsOwner,
         axios,
-        getToken
+        getToken,
+        searchQuery,
+        setSearchQuery,
+        searchedCities,
+        setSearchedCities
       
 
     }

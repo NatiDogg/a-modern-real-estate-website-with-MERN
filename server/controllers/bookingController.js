@@ -1,6 +1,7 @@
 import bookingModel from "../models/bookingModel.js"
 import propertyModel from '../models/propertyModel.js'
 import agencyModel from '../models/agenyModel.js'
+import transporter from "../config/nodeMailer.js"
 
 
 const checkAvailability = async({checkInDate,checkOutDate,property})=>{
@@ -75,10 +76,58 @@ export const bookingCreate = async(req,res)=>{
 
      })
 
+     const mailOptions = {
+        from: process.env.SENDER_EMAIL,
+        to: req.user.email,
+        subject: "Property Booking/Sale Details",
+        html: `
+         <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px; color: #333;">
+  <h2 style="color: #1a73e8; border-bottom: 2px solid #1a73e8; padding-bottom: 10px; margin-top: 0;">Your Booking Details</h2>
+  
+  <p style="font-size: 16px; line-height: 1.5; color: #555;">
+    Thank you for your booking! We've received your request and everything is being processed. Below are your booking details:
+  </p>
+
+  <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="padding: 8px 0; border-bottom: 1px solid #eeeeee;">
+        <strong style="color: #1a73e8;">Booking ID:</strong> ${booking._id}
+      </li>
+      <li style="padding: 8px 0; border-bottom: 1px solid #eeeeee;">
+        <strong style="color: #1a73e8;">Agency Name:</strong> ${propertyData.agency.name}
+      </li>
+      <li style="padding: 8px 0; border-bottom: 1px solid #eeeeee;">
+        <strong style="color: #1a73e8;">Location:</strong> ${propertyData.address}
+      </li>
+      <li style="padding: 8px 0; border-bottom: 1px solid #eeeeee;">
+        <strong style="color: #1a73e8;">Date:</strong> ${booking.checkInDate.toDateString()}
+      </li>
+      <li style="padding: 8px 0;">
+        <strong style="color: #1a73e8;">Booking Amount:</strong> 
+        <span style="font-weight: bold; color: #28a745;">$${booking.totalPrice}</span> / night
+      </li>
+    </ul>
+  </div>
+
+  <p style="font-size: 15px; color: #777; font-style: italic;">
+    We are excited to welcome you soon. If you have any questions, please reply to this email.
+  </p>
+  
+  <hr style="border: 0; border-top: 1px solid #eeeeee; margin: 20px 0;">
+  <p style="font-size: 12px; color: #aaa; text-align: center;">
+    Sent via ${propertyData.agency.name} Booking System
+  </p>
+</div>
+        `
+     }
+     await transporter.sendMail(mailOptions);
+
      res.json({
         success:true,
         message: "Booking Created"
      })
+
+
 
 
    } catch (error) {

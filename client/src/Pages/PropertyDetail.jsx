@@ -3,11 +3,68 @@ import { useParams, useLocation } from 'react-router-dom';
 import { AppContext } from '../Context/AppContext';
 import PropertyImages from '../Components/PropertyImages.jsx';
 import { assets } from '../Data/data.js';
+import toast from 'react-hot-toast';
 
 const PropertyDetail = () => {
       const [property, setProperty] = useState(null);
      const {id} = useParams();
-     const {properties} = useContext(AppContext);
+     const {properties,navigate,axios,getToken} = useContext(AppContext);
+     const [checkInDate, setCheckInDate] = useState(null)
+      const [checkOutDate, setCheckOutDate] = useState(null)
+      const [guests, setGuests] = useState(1);
+
+
+     const [isAvailable, setIsAvailable] = useState(false);
+
+      const checkAvailability = async()=>{
+           try {
+              if(checkInDate > checkOutDate){
+                 toast.error("checkInDate should be less than checkOutDate")
+              }
+               const {data} =  await axios.post("/api/bookings/check-availability", {property: id,checkInDate,checkOutDate}
+               )
+
+               if(data.success){
+                  if(data.isAvailable){
+                      setIsAvailable(true)
+                      toast.success("Property is Available")
+                  }
+               }
+               else{
+                  setIsAvailable(false)
+                  toast.error(data.message)
+               }
+           } catch (error) {
+              toast.error(error.message)
+           }
+      }
+
+      const onSubmitHandler = async(e)=>{
+            try {
+               e.preventDefault()
+               if(!isAvailable){
+                  return checkAvailability()
+               }
+                else{
+                    
+                  const {data} =  await axios.post("/api/bookings/book", {property: id,checkInDate,checkOutDate,guests,paymentMethod: "Pay at Check-in"},{
+                     headers: {Authorization: `Bearer ${await getToken()}`}
+                  }
+                  )
+
+                  if(data.success){
+                     toast.success(data.message)
+                     navigate("/my-bookings")
+                     scrollTo(0,0)
+                  }
+                  else{
+                     toast.error(data.message)
+                  }
+                }
+            } catch (error) {
+               toast.error(error.message)
+            }
+      }
        
      useEffect(()=>{
          const property = properties.find((property)=> property._id === id);
@@ -86,32 +143,32 @@ const PropertyDetail = () => {
                               </div>
 
                              <div className='mt-5 bg-yellow-100 rounded-md py-2'>
-                                <form action="" className='px-4 py-3 rounded-md grid grid-cols-1 lg:grid-cols-4 gap-4'>
+                                <form onSubmit={onSubmitHandler} action="" className='px-4 py-3 rounded-md grid grid-cols-1 lg:grid-cols-4 gap-4'>
                                     <div className='flex flex-col gap-1'>
-                                       <label htmlFor="" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
+                                       <label htmlFor="checkin" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
                                           <img src={assets.calendar} alt="location icon" className='w-4 h-4' />
                                           Check in
                                        </label>
-                                       <input id='checkin' required  type="date"  className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
+                                       <input onChange={(e)=>setCheckInDate(e.target.value)} min={new Date().toISOString().split("T")[0]} id='checkin' required  type="date"  className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
                                     </div>
                                     <div className='flex flex-col gap-1'>
-                                       <label htmlFor="" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
+                                       <label htmlFor="checkout" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
                                           <img src={assets.calendar} alt="location icon" className='w-4 h-4' />
                                           Check out
                                        </label>
-                                       <input id='checkin' required  type="date"  className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
+                                       <input onChange={(e)=>setCheckOutDate(e.target.value)} min={checkInDate} disabled={!checkInDate}  id='checkout' required  type="date"  className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
                                     </div>
                                     <div className='flex flex-col gap-1'>
-                                       <label htmlFor="" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
+                                       <label htmlFor="guests" className='flex flex-row gap-1 items-center text-sm text-gray-500'>
                                           <img src={assets.user} alt="location icon" className='w-4 h-4' />
                                           Guests
                                        </label>
-                                       <input required  id='guests' placeholder='1' type="number" min={1} max={5} className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
+                                       <input value={guests} onChange={(e)=>setGuests(e.target.value)} required  id='guests' placeholder='1' type="number" min={1} max={5} className='border text-sm border-gray-300 text-gray-700 outline-none  focus:border-gray-900 rounded-sm px-2 py-1' />
                                     </div>
                                     <div className='flex flex-col justify-end'>
                                        <button className='bg-black flex items-center justify-center w-full  gap-1 text-[15px] cursor-pointer text-white px-4 py-2 rounded-md text-center hover:shadow-lg hover:shadow-slate-900'>
                                          <img src={assets.search} className='invert  ' width={17} alt="" />
-                                         Check Dates
+                                         {isAvailable ? "Book Property" : "Check Dates"}
                                        </button>
 
                                     </div>

@@ -1,11 +1,25 @@
 import React,{useContext,useEffect,useState} from 'react'
-import { assets, dummyBookingsData } from '../Data/data.js';
+import { assets } from '../Data/data.js';
 import { AppContext } from '../Context/AppContext.jsx';
+import toast from 'react-hot-toast';
 const MyBooking = () => {
   const [bookings, setBookings] = useState([]);
-  const {currency,user} = useContext(AppContext);
-  const getUserBooking = ()=>{
-    setBookings(dummyBookingsData);
+  const {currency,user,axios,getToken} = useContext(AppContext);
+  const getUserBooking = async()=>{
+    try {
+       const {data} =  await axios.get("/api/bookings/user",{
+              headers: {Authorization: `Bearer ${await getToken()}`}
+             })
+
+         if(data.success){
+            setBookings(data.bookings)
+         }
+         else{
+            toast.error(data.message)
+         }
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
   useEffect(()=>{
      if(user){

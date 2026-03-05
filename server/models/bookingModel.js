@@ -8,6 +8,7 @@ const bookingSchema = new mongoose.Schema({
       },
       property: {
         type: String,
+        ref: "Property",
         required: true, 
       },
       agency:{
