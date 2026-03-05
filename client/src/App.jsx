@@ -13,7 +13,7 @@ import { AppContext } from './Context/AppContext.jsx';
 import SideBar from './Components/owner/SideBar.jsx';
 import Dashboard from './Pages/owner/Dashboard.jsx';
 import AddProperty from './Pages/owner/AddProperty.jsx';
-import ListProperty from './Pages/owner/listProperty.jsx';
+import ListProperty from './Pages/owner/ListProperty.jsx';
 import {Toaster} from 'react-hot-toast'
 
 
